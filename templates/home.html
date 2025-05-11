@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Home - ShopEasy{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h2>Summer Sale Up To 50% Off</h2>
+            <p>Discover our amazing collection with exclusive discounts</p>
+            <a href="{% url 'product_list' %}" class="btn">Shop Now</a>
+        </div>
+    </div>
+</section>
+
+<section class="featured-categories">
+    <div class="container">
+        <h2>Shop by Category</h2>
+        <div class="categories-grid">
+            {% for category in featured_categories %}
+            <div class="category-card">
+                <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                <h3><a href="{% url 'category_detail' category.slug %}">{{ category.name }}</a></h3>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="featured-products">
+    <div class="container">
+        <h2>Featured Products</h2>
+        <div class="products-grid">
+            {% for product in featured_products %}
+            <div class="product-card">
+                <img src="{{ product.thumbnail.url }}" alt="{{ product.name }}">
+                <h3><a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a></h3>
+                <div class="price">
+                    ${{ product.price }}
+                    {% if product.old_price %}
+                    <span class="old-price">${{ product.old_price }}</span>
+                    {% endif %}
+                </div>
+                <div class="rating">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= product.average_rating %}
+                            <i class="fas fa-star"></i>
+                        {% else %}
+                            <i class="far fa-star"></i>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <form method="post" action="{% url 'add_to_cart' product.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn">Add to Cart</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="newsletter">
+    <div class="container">
+        <h2>Subscribe to Our Newsletter</h2>
+        <p>Get the latest updates on new products and upcoming sales</p>
+        <form method="post" action="{% url 'subscribe' %}">
+            {% csrf_token %}
+            {{ newsletter_form.email }}
+            <button type="submit" class="btn">Subscribe</button>
+        </form>
+    </div>
+</section>
+{% endblock %}
