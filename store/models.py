@@ -9,7 +9,8 @@ class Category(models.Model):
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to='categories/', blank=True)
-
+    featured = models.BooleanField(default=False)
+    
     class Meta:
         verbose_name_plural = "Categories"
 
@@ -27,6 +28,7 @@ class Product(models.Model):
     discount_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     stock = models.PositiveIntegerField(default=0)
     is_available = models.BooleanField(default=True)
+    featured = models.BooleanField(default=False)
     
     # Electrical Specifications
     voltage = models.CharField(max_length=20, blank=True)  # e.g., "220V"
