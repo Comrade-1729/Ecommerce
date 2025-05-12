@@ -9,6 +9,7 @@ def home(request):
         'cart_items_count': request.cart.items.count() if hasattr(request, 'cart') else 0
     }
     return render(request, 'home.html', context)
+
 def about(request):
     return render(request, 'home/about.html')
 

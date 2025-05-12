@@ -64,7 +64,7 @@
     <div class="container">
         <h2>Subscribe to Our Newsletter</h2>
         <p>Get the latest updates on new products and upcoming sales</p>
-        <form method="post" action="{% url 'subscribe' %}">
+        <form method="post" action="{% url 'home:subscribe' %}">
             {% csrf_token %}
             <input type="email" name="email" placeholder="Enter your email" required>
             <button type="submit" class="btn">Subscribe</button>
